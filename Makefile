@@ -1,7 +1,8 @@
 # -*- Makefile -*-
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+BUFFER_SIZE ?= 42
+FLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=$(BUFFER_SIZE)
 NAME = get_next_line
 OBJ_DIR = obj
 
