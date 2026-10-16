@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:18 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/14 15:34:34 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/16 18:36:12 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,81 @@ t_list	*append_node(t_list **head, t_list *tail, char *line, size_t len)
 	else
 		tail->next = node;
 	return (node);
+}
+
+int	has_newline(char *line, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (line[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	store_chunk(t_list **head, t_list **tail, int fd)
+{
+	ssize_t	n;
+	t_list	*node;
+	char	*chunk;
+
+	chunk = malloc(BUFFER_SIZE + 1);
+	if (!chunk)
+		return (-1);
+	n = read(fd, chunk, BUFFER_SIZE);
+	if (n <= 0)
+	{
+		free(chunk);
+		return ((int)n);
+	}
+	chunk[n] = '\0';
+	node = append_node(head, *tail, chunk, n);
+	if (!node)
+		return (-1);
+	node->new_line_flag = has_newline(chunk, n);
+	*tail = node;
+	return (1);
+}
+
+int	read_and_store(t_list **head, int fd)
+{
+	t_list	*tail;
+	int		status;
+
+	tail = *head;
+	while (tail && tail->next)
+		tail = tail->next;
+	status = 1;
+	while (status > 0 && (!tail || !tail->new_line_flag))
+		status = store_chunk(head, &tail, fd);
+	if (status < 0)
+	{
+		free_lst(head, 1);
+		return (0);
+	}
+	return (1);
+}
+
+void	free_lst(t_list	**head, int	all)
+{
+	t_list	*node;
+	t_list	*temp;
+
+	if (!head)
+		return ;
+	node = *head;
+	while (node)
+	{
+		if (!all && node->new_line_flag)
+			return	(node);
+		temp = node;
+		node = node->next;
+		free(temp->line);
+		free(temp);
+	}
+	*head = node;
 }
