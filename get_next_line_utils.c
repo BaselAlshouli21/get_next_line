@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:18 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/16 18:36:12 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/21 18:44:09 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_list	*append_node(t_list **head, t_list *tail, char *line, size_t len)
 	}
 	node->line = line;
 	node->line_len = len;
+	node->new_line_flag = 0;
 	node->next = NULL;
 	if (!*head)
 		*head = node;
@@ -91,7 +92,7 @@ int	read_and_store(t_list **head, int fd)
 	return (1);
 }
 
-void	free_lst(t_list	**head, int	all)
+t_list	*free_lst(t_list **head, int all)
 {
 	t_list	*node;
 	t_list	*temp;
