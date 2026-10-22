@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:18 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/22 16:36:09 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/22 17:09:33 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	read_and_store(t_list **head, int fd)
 	while (tail && tail->next)
 		tail = tail->next;
 	status = 1;
-	while (status > 0 && (!tail || !tail->new_line_flag))
+	while (status > 0 && (!tail || (tail->new_line_flag == -1)))
 		status = store_chunk(head, &tail, fd);
 	if (status < 0)
 	{
@@ -98,7 +98,7 @@ t_list	*free_lst(t_list **head, int all)
 	t_list	*temp;
 
 	if (!head)
-		return ;
+		return (NULL);
 	node = *head;
 	while (node)
 	{
@@ -110,4 +110,5 @@ t_list	*free_lst(t_list **head, int all)
 		free(temp);
 	}
 	*head = node;
+	return (NULL);
 }

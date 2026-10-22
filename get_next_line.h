@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:11 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/22 16:41:28 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/22 17:18:21 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list	*free_lst(t_list **head, int all);
 size_t	nodelcat(char *str, t_list *node);
 size_t	line_length(t_list **head);
 
-char	*strmove_newline(char *dest, const char *src, size_t n);
+char	*strmove_newline(t_list *node, char *dest, const char *src, size_t n);
 char	*build_line(t_list **head, size_t length);
 char	*get_next_line(int fd);
 
