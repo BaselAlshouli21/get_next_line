@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:18 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/21 18:44:09 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/22 16:36:09 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*append_node(t_list **head, t_list *tail, char *line, size_t len)
 	}
 	node->line = line;
 	node->line_len = len;
-	node->new_line_flag = 0;
+	node->new_line_flag = -1;
 	node->next = NULL;
 	if (!*head)
 		*head = node;
@@ -43,10 +43,10 @@ int	has_newline(char *line, size_t len)
 	while (i < len)
 	{
 		if (line[i] == '\n')
-			return (1);
+			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	store_chunk(t_list **head, t_list **tail, int fd)
@@ -102,7 +102,7 @@ t_list	*free_lst(t_list **head, int all)
 	node = *head;
 	while (node)
 	{
-		if (!all && node->new_line_flag)
+		if (!all && node->new_line_flag != -1)
 			return	(node);
 		temp = node;
 		node = node->next;
