@@ -2,7 +2,7 @@
 
 CC = cc
 BUFFER_SIZE ?= 42
-FLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=$(BUFFER_SIZE)
+FLAGS = -Wall -Wextra -Werror -g -D BUFFER_SIZE=$(BUFFER_SIZE)
 NAME = get_next_line
 OBJ_DIR = obj
 
