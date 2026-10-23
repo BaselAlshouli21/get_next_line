@@ -7,8 +7,8 @@ NAME = get_next_line
 OBJ_DIR = obj
 
 SRCS = \
-	get_next_line.c \
-	get_next_line_utils.c \
+	get_next_line_bonus.c \
+	get_next_line_utils_bonus.c \
 	main.c
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
@@ -18,7 +18,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: %.c get_next_line.h
+$(OBJ_DIR)/%.o: %.c get_next_line_bonus.h
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
