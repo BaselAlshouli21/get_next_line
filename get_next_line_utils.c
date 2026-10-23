@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:18 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/22 17:22:13 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/23 23:41:05 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_list	*free_lst(t_list **head, int all)
 	while (node)
 	{
 		if (!all && node->new_line_flag != -1)
-			return	(node);
+			return (node);
 		temp = node;
 		node = node->next;
 		free(temp->line);

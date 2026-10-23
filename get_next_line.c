@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:15 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/22 17:22:10 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/23 23:51:28 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,28 +78,21 @@ char	*build_line(t_list **head, size_t length)
 	return (str);
 }
 
-char	*strmove_newline(t_list *node, char *dest, const char *src, size_t n)
+void	strmove_newline(t_list *node)
 {
 	size_t	i;
+	size_t	skip;
 
+	skip = node->new_line_flag + 1;
 	i = 0;
-	if (dest < src)
+	while (i + skip < node->line_len)
 	{
-		while (i < n)
-		{
-			dest[i] = src[i];
-			i++;
-		}
+		node->line[i] = node->line[i + skip];
+		i++;
 	}
-	else
-	{
-		while (n-- > 0)
-			dest[n] = src[n];
-	}
-	dest[node->line_len - (node->new_line_flag + 1)] = '\0';
-	node->line_len = node->line_len - (node->new_line_flag + 1);
-	node->new_line_flag = has_newline(dest, node->line_len);
-	return (dest);
+	node->line[i] = '\0';
+	node->line_len = i;
+	node->new_line_flag = has_newline(node->line, i);
 }
 
 char	*get_next_line(int fd)
@@ -119,6 +112,8 @@ char	*get_next_line(int fd)
 	}
 	head = free_lst(&head, 0);
 	if (head)
-		head->line = strmove_newline(head, head->line, &head->line[head->new_line_flag + 1], head->line_len);
+		strmove_newline(head);
+	if (head && !head->line_len)
+		free_lst(head, 1);
 	return (line);
 }
