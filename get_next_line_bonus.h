@@ -6,7 +6,7 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:11 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/23 21:33:03 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/23 21:54:46 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 8
+# endif
+
+# ifndef FD_MAX
+#  define FD_MAX 1024
 # endif
 
 typedef struct s_list
@@ -34,12 +38,13 @@ t_list	*free_lst(t_list **head, int all);
 size_t	nodelcat(char *str, t_list *node);
 size_t	line_length(t_list **head);
 
-char	*strmove_newline(t_list *node, char *dest, const char *src, size_t n);
 char	*build_line(t_list **head, size_t length);
 char	*get_next_line(int fd);
 
 int		store_chunk(t_list **head, t_list **tail, int fd);
 int		read_and_store(t_list **head, int fd);
 int		has_newline(char *line, size_t len);
+
+void	strmove_newline(t_list *node);
 
 #endif

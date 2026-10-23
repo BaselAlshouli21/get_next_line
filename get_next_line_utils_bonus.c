@@ -6,11 +6,11 @@
 /*   By: basil42 <basil42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 13:17:18 by basil42           #+#    #+#             */
-/*   Updated: 2026/10/23 21:32:28 by basil42          ###   ########.fr       */
+/*   Updated: 2026/10/23 22:06:45 by basil42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 t_list	*append_node(t_list **head, t_list *tail, char *line, size_t len)
 {
@@ -103,12 +103,12 @@ t_list	*free_lst(t_list **head, int all)
 	while (node)
 	{
 		if (!all && node->new_line_flag != -1)
-			return	(node);
+			break ;
 		temp = node;
 		node = node->next;
 		free(temp->line);
 		free(temp);
 	}
 	*head = node;
-	return (NULL);
+	return (node);
 }
